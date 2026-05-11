@@ -19,6 +19,19 @@ app.get("/", (req, res) => {
   res.send("BrainBloom AI is running");
 });
 
+app.get("/device-check", (req, res) => {
+
+  const userAgent = req.headers["user-agent"];
+
+  console.log("New Visitor Device:");
+  console.log(userAgent);
+
+  res.json({
+    success: true,
+  });
+
+});
+
 app.post("/chat/:subject", async (req, res) => {
 
   try {
