@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Maths Tutor</title>
+
+<style>
+
+body{
+background:#031133;
+font-family:Arial;
+margin:0;
+padding:20px;
+color:white;
+}
+
+.header{
+background:#162544;
+padding:25px;
+border-radius:25px;
+margin-bottom:20px;
+}
+
+.chat{
+padding-bottom:120px;
+}
+
+.user{
+background:linear-gradient(45deg,#5f4bff,#4b3dff);
+padding:20px;
+border-radius:25px;
+margin-bottom:20px;
+}
+
+.ai{
+background:#1a2945;
+padding:20px;
+border-radius:25px;
+margin-bottom:20px;
+}
+
+.inputBox{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:#031133;
+padding:15px;
+display:flex;
+gap:10px;
+}
+
+input{
+flex:1;
+padding:20px;
+border:none;
+border-radius:20px;
+font-size:20px;
+}
+
+button{
+background:#ff2ca0;
+color:white;
+border:none;
+padding:20px;
+border-radius:20px;
+font-size:20px;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<h1>Maths Tutor</h1>
+
+<p>
+Hello 👋 I am your Maths AI tutor.
+Ask grammar, meanings or writing doubts.
+</p>
+
+</div>
+
+<div id="chat" class="chat"></div>
+
+<div class="inputBox">
+
+<input
+id="message"
+placeholder="Ask Maths doubts..."
+/>
+
+<button onclick="sendMessage()">
+Send
+</button>
+
+</div>
+
+<script>
+
+async function sendMessage(){
+
+const input = document.getElementById("message");
+
+const chat = document.getElementById("chat");
+
+const text = input.value;
+
+if(text === "") return;
+
+chat.innerHTML += `
+<div class="user">
+<h3>You</h3>
+<p>${text}</p>
+</div>
+`;
+
+input.value = "";
+
+const response = await fetch(
+"http://127.0.0.1:3000/chat/Maths",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+message:text
+})
+}
+);
+
+const data = await response.json();
+
+chat.innerHTML += `
+<div class="ai">
+<h3>Maths Tutor</h3>
+<p>${data.reply}</p>
+</div>
+`;
+
+window.scrollTo(0,document.body.scrollHeight);
+
+}
+
+</script>
+
+</body>
+
+</html>
