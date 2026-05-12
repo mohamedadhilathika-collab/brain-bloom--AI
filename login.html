@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>BrainBloom Login</title>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#08142b;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+color:white;
+}
+
+.box{
+background:#13254d;
+padding:30px;
+border-radius:25px;
+width:320px;
+}
+
+h1{
+text-align:center;
+color:#ff1493;
+}
+
+input{
+width:100%;
+padding:14px;
+margin-top:15px;
+border:none;
+border-radius:12px;
+font-size:16px;
+box-sizing:border-box;
+}
+
+button{
+width:100%;
+padding:14px;
+margin-top:20px;
+border:none;
+border-radius:12px;
+background:#ff1493;
+color:white;
+font-size:18px;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>BrainBloom Login</h1>
+
+<input
+id="username"
+placeholder="Username">
+
+<input
+id="realname"
+placeholder="Real Name">
+
+<input
+id="nickname"
+placeholder="Nickname">
+
+<input
+id="studies"
+placeholder="Studies / Class">
+
+<button onclick="login()">
+Login
+</button>
+
+</div>
+
+<script>
+
+async function login(){
+
+const username =
+document.getElementById("username").value;
+
+const realname =
+document.getElementById("realname").value;
+
+const nickname =
+document.getElementById("nickname").value;
+
+const studies =
+document.getElementById("studies").value;
+
+await fetch("/login-log",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+username,
+realname,
+nickname,
+studies
+})
+
+});
+
+window.location.href="/index.html";
+
+}
+
+</script>
+
+</body>
+
+</html>
