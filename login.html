@@ -12,8 +12,8 @@ content="width=device-width, initial-scale=1.0">
 
 body{
 margin:0;
-font-family:Arial;
 background:#08142b;
+font-family:Arial;
 display:flex;
 justify-content:center;
 align-items:center;
@@ -24,7 +24,7 @@ color:white;
 .box{
 background:#13254d;
 padding:30px;
-border-radius:25px;
+border-radius:20px;
 width:320px;
 }
 
@@ -39,8 +39,8 @@ padding:14px;
 margin-top:15px;
 border:none;
 border-radius:12px;
-font-size:16px;
 box-sizing:border-box;
+font-size:16px;
 }
 
 button{
@@ -52,7 +52,6 @@ border-radius:12px;
 background:#ff1493;
 color:white;
 font-size:18px;
-font-weight:bold;
 }
 
 </style>
@@ -90,35 +89,6 @@ Login
 <script>
 
 async function login(){
-
-const username =
-document.getElementById("username").value;
-
-const realname =
-document.getElementById("realname").value;
-
-const nickname =
-document.getElementById("nickname").value;
-
-const studies =
-document.getElementById("studies").value;
-
-await fetch("/login-log",{
-
-method:"POST",
-
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-username,
-realname,
-nickname,
-studies
-})
-
-});
 
 window.location.href="/index.html";
 

@@ -1,7 +1,7 @@
-require("dotenv").config();
-
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
+
 const OpenAI = require("openai");
 
 const app = express();
@@ -16,8 +16,10 @@ const client = new OpenAI({
 });
 
 app.get("/", (req, res) => {
-  res.send("BrainBloom AI is running");
+  res.sendFile(__dirname + "/login.html");
 });
+
+app.use(express.static(__dirname));
 
 app.get("/device-check", (req, res) => {
 
@@ -26,8 +28,28 @@ app.get("/device-check", (req, res) => {
   console.log("New Visitor Device:");
   console.log(userAgent);
 
+  res.send("logged");
+
+});
+
+app.post("/login-log", (req,res)=>{
+
+  console.log("New Login");
+
+  console.log("Username:",
+  req.body.username);
+
+  console.log("Real Name:",
+  req.body.realname);
+
+  console.log("Nickname:",
+  req.body.nickname);
+
+  console.log("Studies:",
+  req.body.studies);
+
   res.json({
-    success: true,
+    success:true
   });
 
 });
@@ -41,14 +63,17 @@ app.post("/chat/:subject", async (req, res) => {
     const message = req.body.message;
 
     const completion =
-      await client.chat.completions.create({
+    await client.chat.completions.create({
 
-        model: "openai/gpt-3.5-turbo",
+      model: "openai/gpt-3.5-turbo",
 
-        messages: [
-          {
-            role: "system",
-            content: `You are a strict AI tutor.
+      messages: [
+
+        {
+          role: "system",
+
+          content:
+`You are a strict AI tutor.
 
 For english subject:
 Your name is Emma English Expert.
@@ -62,20 +87,20 @@ Your name is George Washington Social Expert.
 For maths subject:
 Your name is Ramanujan Maths Expert.
 
-If anyone asks your name, ALWAYS tell ONLY the correct tutor name for that subject.
+Always answer according to the selected subject.`,
+        },
 
-Never create random names like Sara.`,
-          },
-          {
-            role: "user",
-            content: message,
-          },
-        ],
+        {
+          role: "user",
+          content: message,
+        },
 
-      });
+      ],
+
+    });
 
     const reply =
-      completion.choices[0].message.content;
+    completion.choices[0].message.content;
 
     res.json({
       reply,
@@ -93,6 +118,11 @@ Never create random names like Sara.`,
 
 });
 
-app.listen(3000, () => {
+const PORT =
+process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+
   console.log("BrainBloom AI running");
+
 });
